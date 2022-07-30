@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'const/theme_data.dart';
+import 'inner_screens/feeds_screen.dart';
+import 'inner_screens/on_sale_screen.dart';
 import 'screens/btm_bar.dart';
-import 'screens/home_screen.dart';
 import 'provider/dark_theme_provider.dart';
 
 void main() {
@@ -52,6 +53,10 @@ class _MyAppState extends State<MyApp> {
           title: 'Flutter Demo',
           theme: Styles.themeData(themeChangeProvider.getDarkTheme, context),
           home: const BottomBarScreen(),
+          routes: {
+            OnSaleScreen.routename: (ctx) => const OnSaleScreen(),
+            FeedsScreen.routename: (ctx) => const FeedsScreen(),
+          },
         );
       }),
     );
