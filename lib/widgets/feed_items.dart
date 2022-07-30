@@ -1,12 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:groceryuserapp/widgets/heart_widget.dart';
-import 'package:groceryuserapp/widgets/price_widget.dart';
 
 import '../services/utils.dart';
+import 'heart_widget.dart';
+import 'price_widget.dart';
 import 'text_widget.dart';
 
 class FeedIems extends StatefulWidget {

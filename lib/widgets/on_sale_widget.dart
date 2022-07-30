@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:groceryuserapp/widgets/heart_widget.dart';
-import 'package:groceryuserapp/widgets/price_widget.dart';
-import 'package:groceryuserapp/widgets/text_widget.dart';
 
 import '../services/utils.dart';
+import 'heart_widget.dart';
+import 'price_widget.dart';
+import 'text_widget.dart';
 
 class OnSaleWidgte extends StatefulWidget {
   const OnSaleWidgte({Key? key}) : super(key: key);

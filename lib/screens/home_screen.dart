@@ -1,14 +1,11 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:groceryuserapp/services/utils.dart';
-import 'package:groceryuserapp/widgets/feed_items.dart';
-import 'package:groceryuserapp/widgets/text_widget.dart';
 
-import 'package:provider/provider.dart';
-
-import '../provider/dark_theme_provider.dart';
+import '../services/utils.dart';
+import '../widgets/feed_items.dart';
 import '../widgets/on_sale_widget.dart';
+import '../widgets/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
