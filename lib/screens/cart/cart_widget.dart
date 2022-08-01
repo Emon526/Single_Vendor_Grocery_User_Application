@@ -2,9 +2,11 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:groceryuserapp/widgets/heart_widget.dart';
 
+import '../../inner_screens/product_details.dart';
+import '../../services/global_methods.dart';
 import '../../services/utils.dart';
+import '../../widgets/heart_widget.dart';
 import '../../widgets/text_widget.dart';
 
 class CartWidget extends StatefulWidget {
@@ -35,7 +37,10 @@ class _CartWidgetState extends State<CartWidget> {
     Size size = utils.getScreenSize;
     Color color = utils.color;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalMethods.navigateTo(
+            ctx: context, routename: ProductDetails.routename);
+      },
       child: Row(
         children: [
           Expanded(
@@ -75,7 +80,7 @@ class _CartWidgetState extends State<CartWidget> {
                           width: size.width * 0.3,
                           child: Row(
                             children: [
-                              _quantitityController(
+                              _quantityController(
                                 color: Colors.red,
                                 fct: () {},
                                 icon: CupertinoIcons.minus,
@@ -105,7 +110,7 @@ class _CartWidgetState extends State<CartWidget> {
                                   },
                                 ),
                               ),
-                              _quantitityController(
+                              _quantityController(
                                 color: Colors.green,
                                 fct: () {},
                                 icon: CupertinoIcons.plus,
@@ -153,7 +158,7 @@ class _CartWidgetState extends State<CartWidget> {
     );
   }
 
-  Widget _quantitityController(
+  Widget _quantityController(
       {required Function fct, required IconData icon, required Color color}) {
     return Flexible(
       flex: 2,

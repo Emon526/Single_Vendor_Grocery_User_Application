@@ -2,6 +2,8 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../inner_screens/product_details.dart';
+import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'heart_widget.dart';
 import 'price_widget.dart';
@@ -41,7 +43,10 @@ class _FeedIemsState extends State<FeedIems> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () {},
+          onTap: () {
+            GlobalMethods.navigateTo(
+                ctx: context, routename: ProductDetails.routename);
+          },
           child: Column(
             children: [
               FancyShimmerImage(
@@ -83,13 +88,13 @@ class _FeedIemsState extends State<FeedIems> {
                           salePrice: 2.99),
                     ),
                     const SizedBox(
-                      width: 8,
+                      width: 3,
                     ),
                     Flexible(
                       child: Row(
                         children: [
                           Flexible(
-                            // flex: 1,
+                            flex: 3,
                             child: FittedBox(
                               child: TextWidget(
                                 text: 'KG',
