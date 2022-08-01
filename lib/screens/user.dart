@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import '../provider/dark_theme_provider.dart';
 import '../services/global_methods.dart';
 import '../widgets/text_widget.dart';
+import 'orders/orders_screen.dart';
+import 'viewed_recently/viewed_recenty.dart';
 import 'wishlist/wishlist_screen.dart';
 
 class UserScreen extends StatefulWidget {
@@ -96,7 +98,10 @@ class _UserScreenState extends State<UserScreen> {
                   color: color,
                   title: "Orders",
                   icon: IconlyLight.bag,
-                  onPressed: () {},
+                  onPressed: () {
+                    GlobalMethods.navigateTo(
+                        ctx: context, routename: OrderScreen.routename);
+                  },
                 ),
                 _listTiles(
                   color: color,
@@ -111,7 +116,10 @@ class _UserScreenState extends State<UserScreen> {
                   color: color,
                   title: "Viewed",
                   icon: IconlyLight.show,
-                  onPressed: () {},
+                  onPressed: () {
+                    GlobalMethods.navigateTo(
+                        ctx: context, routename: ViewedRecently.routename);
+                  },
                 ),
                 _listTiles(
                   color: color,
@@ -141,7 +149,11 @@ class _UserScreenState extends State<UserScreen> {
                   title: "Logout",
                   icon: IconlyLight.logout,
                   onPressed: () {
-                    _showLogoutDialog();
+                    GlobalMethods.warningDialog(
+                        context: context,
+                        title: 'Sign out',
+                        subtitle: 'Do you wanna sign out?',
+                        fct: () {});
                   },
                 ),
               ],
@@ -150,52 +162,6 @@ class _UserScreenState extends State<UserScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _showLogoutDialog() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Row(
-              children: [
-                Image.asset(
-                  'assets/images/warning-sign.png',
-                  height: 20,
-                  width: 20,
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text('Log Out'),
-              ],
-            ),
-            content: const Text('Do you wanna sign out ?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  }
-                },
-                child: TextWidget(
-                  text: 'Cancel',
-                  color: Colors.cyan,
-                  textSize: 18,
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: TextWidget(
-                  text: 'OK',
-                  color: Colors.red,
-                  textSize: 18,
-                ),
-              ),
-            ],
-          );
-        });
   }
 
   Future<void> _showAddressDialog() async {

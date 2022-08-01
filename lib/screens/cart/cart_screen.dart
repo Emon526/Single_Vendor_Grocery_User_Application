@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/text_widget.dart';
 import 'cart_widget.dart';
@@ -18,7 +19,13 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              GlobalMethods.warningDialog(
+                  context: context,
+                  title: 'Empty your cart',
+                  subtitle: 'Are you sure?',
+                  fct: () {});
+            },
             icon: Icon(
               IconlyBroken.delete,
               color: color,

@@ -9,6 +9,8 @@ import 'inner_screens/on_sale_screen.dart';
 import 'inner_screens/product_details.dart';
 import 'screens/btm_bar.dart';
 import 'provider/dark_theme_provider.dart';
+import 'screens/orders/orders_screen.dart';
+import 'screens/viewed_recently/viewed_recenty.dart';
 import 'screens/wishlist/wishlist_screen.dart';
 
 void main() {
@@ -60,6 +62,8 @@ class _MyAppState extends State<MyApp> {
             FeedsScreen.routename: (ctx) => const FeedsScreen(),
             ProductDetails.routename: (ctx) => const ProductDetails(),
             WishListScreen.routename: (ctx) => const WishListScreen(),
+            OrderScreen.routename: (ctx) => const OrderScreen(),
+            ViewedRecently.routename: (ctx) => const ViewedRecently(),
           },
         );
       }),
