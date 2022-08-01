@@ -9,6 +9,7 @@ import 'inner_screens/on_sale_screen.dart';
 import 'inner_screens/product_details.dart';
 import 'screens/btm_bar.dart';
 import 'provider/dark_theme_provider.dart';
+import 'screens/wishlist/wishlist_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
             OnSaleScreen.routename: (ctx) => const OnSaleScreen(),
             FeedsScreen.routename: (ctx) => const FeedsScreen(),
             ProductDetails.routename: (ctx) => const ProductDetails(),
+            WishListScreen.routename: (ctx) => const WishListScreen(),
           },
         );
       }),

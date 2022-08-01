@@ -7,7 +7,9 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/dark_theme_provider.dart';
+import '../services/global_methods.dart';
 import '../widgets/text_widget.dart';
+import 'wishlist/wishlist_screen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -100,7 +102,10 @@ class _UserScreenState extends State<UserScreen> {
                   color: color,
                   title: "Wishlist",
                   icon: IconlyLight.heart,
-                  onPressed: () {},
+                  onPressed: () {
+                    GlobalMethods.navigateTo(
+                        ctx: context, routename: WishListScreen.routename);
+                  },
                 ),
                 _listTiles(
                   color: color,
