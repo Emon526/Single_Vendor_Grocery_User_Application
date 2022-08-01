@@ -143,7 +143,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         quantityControl(
-                            fct: () {},
+                            fct: () {
+                              if (_quantitityTextController.text == '1') {
+                                return;
+                              } else {
+                                setState(() {
+                                  _quantitityTextController.text = (int.parse(
+                                              _quantitityTextController.text) -
+                                          1)
+                                      .toString();
+                                });
+                              }
+                            },
                             icon: CupertinoIcons.minus,
                             color: Colors.red),
                         const SizedBox(
@@ -180,7 +191,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: 5,
                         ),
                         quantityControl(
-                            fct: () {},
+                            fct: () {
+                              setState(() {
+                                _quantitityTextController.text =
+                                    (int.parse(_quantitityTextController.text) +
+                                            1)
+                                        .toString();
+                              });
+                            },
                             icon: CupertinoIcons.add,
                             color: Colors.green),
                       ],
@@ -224,7 +242,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isTitle: true,
                                       ),
                                       TextWidget(
-                                        text: '1Kg',
+                                        text:
+                                            '${_quantitityTextController.text}Kg',
                                         color: color,
                                         textSize: 16,
                                         isTitle: false,

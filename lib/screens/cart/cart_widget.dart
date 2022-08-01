@@ -82,7 +82,19 @@ class _CartWidgetState extends State<CartWidget> {
                             children: [
                               _quantityController(
                                 color: Colors.red,
-                                fct: () {},
+                                fct: () {
+                                  if (_quantitityTextController.text == '1') {
+                                    return;
+                                  } else {
+                                    setState(() {
+                                      _quantitityTextController.text =
+                                          (int.parse(_quantitityTextController
+                                                      .text) -
+                                                  1)
+                                              .toString();
+                                    });
+                                  }
+                                },
                                 icon: CupertinoIcons.minus,
                               ),
                               Flexible(
@@ -112,7 +124,15 @@ class _CartWidgetState extends State<CartWidget> {
                               ),
                               _quantityController(
                                 color: Colors.green,
-                                fct: () {},
+                                fct: () {
+                                  setState(() {
+                                    _quantitityTextController.text = (int.parse(
+                                                _quantitityTextController
+                                                    .text) +
+                                            1)
+                                        .toString();
+                                  });
+                                },
                                 icon: CupertinoIcons.plus,
                               ),
                             ],
