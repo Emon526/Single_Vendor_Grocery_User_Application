@@ -1,49 +1,60 @@
-import 'dart:developer';
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 
 import '../const/consts.dart';
+
 import '../services/global_methods.dart';
+import '../services/utils.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/google_button.dart';
+
 import '../widgets/text_widget.dart';
 import 'forget_pass.dart';
-import 'register.dart';
+import 'login.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const routename = '/LoginScreen';
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  static const routename = '/RegisterScreen';
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _fullNameTextController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passTextController = TextEditingController();
+  final _addressTextController = TextEditingController();
   final _passFocusNode = FocusNode();
-  final _formKey = GlobalKey<FormState>();
+  final _emailFocusNode = FocusNode();
+  final _addressFocusNode = FocusNode();
   var _onsecureText = true;
   @override
   void dispose() {
+    _fullNameTextController.dispose();
     _emailTextController.dispose();
     _passTextController.dispose();
+    _addressTextController.dispose();
+    _emailFocusNode.dispose();
     _passFocusNode.dispose();
+    _addressFocusNode.dispose();
     super.dispose();
   }
 
-  void _submitFromOnLogin() {
+  void _submitFromOnRegister() {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
-      log("form valid");
+      _formKey.currentState!.save();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Utils(context).getTheme;
+    Color color = Utils(context).color;
     return Scaffold(
       body: Stack(
         children: [
@@ -71,10 +82,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(
-                    height: 120,
+                    height: 60,
+                  ),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () => Navigator.canPop(context)
+                        ? Navigator.pop(context)
+                        : null,
+                    child: Icon(
+                      IconlyLight.arrowLeft2,
+                      color: theme == true ? Colors.white : Colors.black,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
                   ),
                   TextWidget(
-                    text: 'Welcome Back',
+                    text: 'Welcome',
                     textSize: 30,
                     color: Colors.white,
                     isTitle: true,
@@ -83,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 8,
                   ),
                   TextWidget(
-                    text: 'Sign in to continue',
+                    text: 'Sign up to continue',
                     textSize: 18,
                     color: Colors.white,
                     isTitle: false,
@@ -95,6 +120,44 @@ class _LoginScreenState extends State<LoginScreen> {
                       key: _formKey,
                       child: Column(
                         children: [
+                          //full name
+                          TextFormField(
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: () => FocusScope.of(context)
+                                .requestFocus(_emailFocusNode),
+                            controller: _fullNameTextController,
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Field is missing';
+                              } else {
+                                return null;
+                              }
+                            },
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              hintText: 'Full name',
+                              hintStyle: TextStyle(color: Colors.white),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           TextFormField(
                             textInputAction: TextInputAction.next,
                             onEditingComplete: () => FocusScope.of(context)
@@ -122,17 +185,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
                             ),
                           ),
                           const SizedBox(
-                            height: 12,
+                            height: 20,
                           ),
                           //Password
                           TextFormField(
                             textInputAction: TextInputAction.done,
-                            onEditingComplete: () {
-                              _submitFromOnLogin();
-                            },
+                            onEditingComplete: () {},
                             controller: _passTextController,
                             focusNode: _passFocusNode,
                             obscureText: _onsecureText,
@@ -171,15 +237,59 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: _submitFromOnRegister,
+                            controller: _addressTextController,
+                            focusNode: _addressFocusNode,
+                            // keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value!.isEmpty || value.length < 10) {
+                                return 'Please enter a valid  address';
+                              } else {
+                                return null;
+                              }
+                            },
+                            style: const TextStyle(color: Colors.white),
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
+                            decoration: const InputDecoration(
+                              hintText: 'Shipping Address',
+                              hintStyle: TextStyle(color: Colors.white),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       )),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Align(
-                    alignment: Alignment.topRight,
+                    alignment: Alignment.centerRight,
                     child: TextButton(
                         onPressed: () {
                           GlobalMethods.navigateTo(
@@ -196,70 +306,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontStyle: FontStyle.italic),
                         )),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   AuthButton(
                     fct: () {
-                      _submitFromOnLogin();
+                      _submitFromOnRegister();
                     },
-                    buttonText: 'Login',
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const GoogleButton(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      TextWidget(
-                        text: 'OR',
-                        color: Colors.white,
-                        textSize: 18,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      const Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AuthButton(
-                    fct: () {},
-                    buttonText: 'Continue as a guest',
-                    primary: Colors.black,
+                    buttonText: 'Sign up',
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   RichText(
                     text: TextSpan(
-                        text: 'Don\'t have an account?',
+                        text: 'Already a user?',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                         ),
                         children: [
                           TextSpan(
-                              text: '  Sign up',
+                              text: '  Sign in',
                               style: const TextStyle(
                                 color: Colors.lightBlue,
                                 fontSize: 18,
@@ -268,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.pushReplacementNamed(
-                                      context, RegisterScreen.routename);
+                                      context, LoginScreen.routename);
                                 })
                         ]),
                   ),
