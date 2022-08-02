@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
+import 'auth/login.dart';
 import 'const/theme_data.dart';
 import 'inner_screens/feeds_screen.dart';
 import 'inner_screens/on_sale_screen.dart';
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: Styles.themeData(themeChangeProvider.getDarkTheme, context),
-          home: const BottomBarScreen(),
+          home: const LoginScreen(),
           routes: {
             OnSaleScreen.routename: (ctx) => const OnSaleScreen(),
             FeedsScreen.routename: (ctx) => const FeedsScreen(),
