@@ -6,6 +6,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 
 import 'package:provider/provider.dart';
 
+import '../auth/forget_pass.dart';
 import '../provider/dark_theme_provider.dart';
 import '../services/global_methods.dart';
 import '../widgets/text_widget.dart';
@@ -125,23 +126,10 @@ class _UserScreenState extends State<UserScreen> {
                   color: color,
                   title: "Forget password",
                   icon: IconlyLight.unlock,
-                  onPressed: () {},
-                ),
-                SwitchListTile(
-                  title: TextWidget(
-                    text: themeState.getDarkTheme ? 'Dark mode' : 'Light mode',
-                    color: color,
-                    textSize: 18,
-                    // isTitle: true,
-                  ),
-                  secondary: Icon(themeState.getDarkTheme
-                      ? Icons.dark_mode_outlined
-                      : Icons.light_mode_outlined),
-                  value: themeState.getDarkTheme,
-                  onChanged: (bool value) {
-                    setState(() {
-                      themeState.setDarkTheme = value;
-                    });
+                  onPressed: () {
+                    GlobalMethods.navigateTo(
+                        ctx: context,
+                        routename: ForgetPassowrdScreen.routename);
                   },
                 ),
                 _listTiles(
@@ -154,6 +142,23 @@ class _UserScreenState extends State<UserScreen> {
                         title: 'Sign out',
                         subtitle: 'Do you wanna sign out?',
                         fct: () {});
+                  },
+                ),
+                SwitchListTile(
+                  title: TextWidget(
+                    text: themeState.getDarkTheme ? 'Dark mode' : 'Light mode',
+                    color: color,
+                    textSize: 22,
+                    // isTitle: true,
+                  ),
+                  secondary: Icon(themeState.getDarkTheme
+                      ? Icons.dark_mode_outlined
+                      : Icons.light_mode_outlined),
+                  value: themeState.getDarkTheme,
+                  onChanged: (bool value) {
+                    setState(() {
+                      themeState.setDarkTheme = value;
+                    });
                   },
                 ),
               ],

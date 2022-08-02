@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
+import 'auth/forget_pass.dart';
 import 'auth/login.dart';
+import 'auth/register.dart';
 import 'const/theme_data.dart';
 import 'inner_screens/feeds_screen.dart';
 import 'inner_screens/on_sale_screen.dart';
@@ -57,7 +59,8 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: Styles.themeData(themeChangeProvider.getDarkTheme, context),
-          home: const LoginScreen(),
+          // home: const LoginScreen(),
+          home: const BottomBarScreen(),
           routes: {
             OnSaleScreen.routename: (ctx) => const OnSaleScreen(),
             FeedsScreen.routename: (ctx) => const FeedsScreen(),
@@ -65,6 +68,10 @@ class _MyAppState extends State<MyApp> {
             WishListScreen.routename: (ctx) => const WishListScreen(),
             OrderScreen.routename: (ctx) => const OrderScreen(),
             ViewedRecently.routename: (ctx) => const ViewedRecently(),
+            RegisterScreen.routename: (ctx) => const RegisterScreen(),
+            LoginScreen.routename: (ctx) => const LoginScreen(),
+            ForgetPassowrdScreen.routename: (ctx) =>
+                const ForgetPassowrdScreen(),
           },
         );
       }),
