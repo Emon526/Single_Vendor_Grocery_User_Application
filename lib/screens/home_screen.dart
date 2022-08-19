@@ -1,10 +1,13 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 import '../const/consts.dart';
 import '../inner_screens/feeds_screen.dart';
 import '../inner_screens/on_sale_screen.dart';
+import '../models/products_model.dart';
+import '../providers/product_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import '../widgets/feed_items.dart';
@@ -25,7 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final themeState = utils.getTheme;
     Size size = utils.getScreenSize;
     Color color = utils.color;
-
+    final productProvider = Provider.of<ProductProvider>(context);
+    List<ProductModel> allProducts = productProvider.getProduct;
+    List<ProductModel> productOnSale = productProvider.getOnsaleProducts;
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -95,9 +100,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: size.height * 0.25,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 10,
+                      itemCount:
+                          productOnSale.length < 10 ? productOnSale.length : 10,
                       itemBuilder: (context, index) {
-                        return const OnSaleWidgte();
+                        return ChangeNotifierProvider.value(
+                          value: productOnSale[index],
+                          child: const OnSaleWidgte(),
+                        );
                       }),
                 ),
               ),
@@ -139,8 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisCount: 2,
             padding: EdgeInsets.zero,
             childAspectRatio: size.width / (size.height * 0.70),
-            children: List.generate(4, (index) {
-              return const FeedIems();
+            children: List.generate(
+                allProducts.length < 4 ? allProducts.length : 4, (index) {
+              return ChangeNotifierProvider.value(
+                  value: allProducts[index], child: const FeedIems());
             }),
           )
         ],

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import '../models/products_model.dart';
+import '../providers/product_provider.dart';
 import '../services/utils.dart';
 import '../widgets/back_widget.dart';
 import '../widgets/feed_items.dart';
@@ -30,6 +34,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
     final themeState = utils.getTheme;
     Size size = utils.getScreenSize;
     Color color = utils.color;
+    final productProvider = Provider.of<ProductProvider>(context);
+    List<ProductModel> allProducts = productProvider.getProduct;
     return Scaffold(
       appBar: AppBar(
         leading: const BackWidget(),
@@ -68,7 +74,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                             color: Colors.greenAccent, width: 1),
                       ),
                       hintText: "What's on your mind",
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       suffixIcon: IconButton(
                           onPressed: () {
                             _searchTextController!.clear();
@@ -90,8 +96,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
               childAspectRatio: size.width / (size.height * 0.70),
-              children: List.generate(4, (index) {
-                return const FeedIems();
+              children: List.generate(allProducts.length, (index) {
+                return ChangeNotifierProvider.value(
+                    value: allProducts[index], child: const FeedIems());
               }),
             )
           ],

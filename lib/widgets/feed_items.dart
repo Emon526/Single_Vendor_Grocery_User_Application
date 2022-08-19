@@ -1,16 +1,19 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../inner_screens/product_details.dart';
-import '../services/global_methods.dart';
+import '../models/products_model.dart';
 import '../services/utils.dart';
 import 'heart_widget.dart';
 import 'price_widget.dart';
 import 'text_widget.dart';
 
 class FeedIems extends StatefulWidget {
-  const FeedIems({Key? key}) : super(key: key);
+  const FeedIems({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<FeedIems> createState() => _FeedIemsState();
@@ -36,6 +39,8 @@ class _FeedIemsState extends State<FeedIems> {
     final themeState = utils.getTheme;
     Size size = utils.getScreenSize;
     Color color = utils.color;
+    final productModel = Provider.of<ProductModel>(context);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -44,13 +49,15 @@ class _FeedIemsState extends State<FeedIems> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            GlobalMethods.navigateTo(
-                ctx: context, routename: ProductDetails.routename);
+            // GlobalMethods.navigateTo(
+            //     ctx: context, routename: ProductDetails.routename);
+            Navigator.pushNamed(context, ProductDetails.routename,
+                arguments: productModel.id);
           },
           child: Column(
             children: [
               FancyShimmerImage(
-                imageUrl: 'https://picsum.photos/200',
+                imageUrl: productModel.imageUrl,
                 height: size.width * 0.21,
                 width: size.width * 0.2,
                 boxFit: BoxFit.fill,
@@ -62,11 +69,15 @@ class _FeedIemsState extends State<FeedIems> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextWidget(
-                      text: 'Title',
-                      color: color,
-                      textSize: 20,
-                      isTitle: true,
+                    Flexible(
+                      flex: 3,
+                      child: TextWidget(
+                        text: productModel.title,
+                        color: color,
+                        maxLines: 1,
+                        textSize: 18,
+                        isTitle: true,
+                      ),
                     ),
                     const HeartButton(),
                   ],
@@ -80,26 +91,24 @@ class _FeedIemsState extends State<FeedIems> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      flex: 4,
+                      flex: 3,
                       child: PriceWidget(
-                          textPrice: _quentityTextController.text,
-                          isOnSale: true,
-                          price: 5.9,
-                          salePrice: 2.99),
-                    ),
-                    const SizedBox(
-                      width: 3,
+                        textPrice: _quentityTextController.text,
+                        isOnSale: productModel.isOnSale,
+                        price: productModel.price,
+                        salePrice: productModel.salePrice,
+                      ),
                     ),
                     Flexible(
                       child: Row(
                         children: [
                           Flexible(
-                            flex: 3,
+                            flex: 6,
                             child: FittedBox(
                               child: TextWidget(
-                                text: 'KG',
+                                text: productModel.isPiece ? 'Piece' : 'Kg',
                                 color: color,
-                                textSize: 18,
+                                textSize: 20,
                                 isTitle: true,
                               ),
                             ),

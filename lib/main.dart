@@ -7,9 +7,11 @@ import 'auth/forget_pass.dart';
 import 'auth/login.dart';
 import 'auth/register.dart';
 import 'const/theme_data.dart';
+import 'inner_screens/cat_sceen.dart';
 import 'inner_screens/feeds_screen.dart';
 import 'inner_screens/on_sale_screen.dart';
 import 'inner_screens/product_details.dart';
+import 'providers/product_provider.dart';
 import 'screens/btm_bar.dart';
 import 'provider/dark_theme_provider.dart';
 import 'screens/orders/orders_screen.dart';
@@ -51,7 +53,8 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) {
           return themeChangeProvider;
-        })
+        }),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
@@ -72,6 +75,7 @@ class _MyAppState extends State<MyApp> {
             LoginScreen.routename: (ctx) => const LoginScreen(),
             ForgetPassowrdScreen.routename: (ctx) =>
                 const ForgetPassowrdScreen(),
+            CategoryScreen.routename: (ctx) => const CategoryScreen(),
           },
         );
       }),

@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../inner_screens/cat_sceen.dart';
 import '../provider/dark_theme_provider.dart';
 import 'text_widget.dart';
 
@@ -24,7 +23,11 @@ class CategoriesWidget extends StatelessWidget {
     double _screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        log('Category pressed');
+        Navigator.pushNamed(
+          context,
+          CategoryScreen.routename,
+          arguments: catText,
+        );
       },
       child: Container(
         decoration: BoxDecoration(
